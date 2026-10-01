@@ -5,8 +5,9 @@ import "fmt"
 var productosVendidos []string
 var subtotales []float64
 
-func RegistroVenta(nombre string, precio float64, cantidad int) {
+func RegistrarVenta(nombre string, precio float64, cantidad int) {
 	subtotal := precio * float64(cantidad)
+
 	productosVendidos = append(productosVendidos, nombre)
 	subtotales = append(subtotales, subtotal)
 }
@@ -16,12 +17,16 @@ func MostrarEstadisticas() {
 		fmt.Println("No existen ventas registradas.")
 		return
 	}
+
 	total := 0.0
+
 	for _, s := range subtotales {
 		total += s
 	}
+
 	fmt.Println("Total recaudado:", total)
 }
+
 func main() {
 	for {
 		fmt.Println("\n--- Menú ---")
@@ -39,15 +44,30 @@ func main() {
 			fmt.Println("3. Pan ($0.50)")
 
 			var numProducto, cantidad int
+
 			fmt.Print("Número de producto: ")
 			fmt.Scanln(&numProducto)
+
 			fmt.Print("Cantidad: ")
 			fmt.Scanln(&cantidad)
 
+			if numProducto == 1 {
+				RegistrarVenta("Arroz", 1.25, cantidad)
+			} else if numProducto == 2 {
+				RegistrarVenta("Leche", 0.95, cantidad)
+			} else if numProducto == 3 {
+				RegistrarVenta("Pan", 0.50, cantidad)
+			} else {
+				fmt.Println("Producto inválido.")
+			}
+
 		} else if opcion == 2 {
 			MostrarEstadisticas()
+
 		} else if opcion == 3 {
+			fmt.Println("Programa finalizado.")
 			break
+
 		} else {
 			fmt.Println("Opción inválida.")
 		}
